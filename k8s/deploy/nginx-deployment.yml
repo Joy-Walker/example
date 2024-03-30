@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ngxin-deployment
+  labels:
+    app: ngxin-deployment
+spec:
+  selector:
+    matchLabels:
+      app: nginx-deploy
+  replicas: 2
+  template:
+    metadata:
+      name: ngxin-deployment
+      labels:
+        app: nginx-deploy
+    spec:
+      hostAliases:
+        - ip: 127.0.0.1
+          hostnames:
+            - foo.remote
+      containers:
+        - name: nginx-deploy
+          image: nginx
+          ports:
+            - containerPort: 80
+          imagePullPolicy: IfNotPresent
+          volumeMounts:
+            - mountPath: /usr/share/nginx/html
+              name: nginx-vol
+      restartPolicy: Always
+      volumes:
+        - name: nginx-vol
+          hostPath:
+            path: /tmp/data
+
+

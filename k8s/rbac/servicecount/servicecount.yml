@@ -1,0 +1,7 @@
+# 定义用户
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  namespace: mynamespace
+  name: example-sa
+

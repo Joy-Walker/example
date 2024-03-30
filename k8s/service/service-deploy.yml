@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ngx-deploy
+  labels:
+    app: ngx-deploy
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: ngx-deploy
+  template:
+    metadata:
+      name: ngx-deploy
+      labels:
+        app: ngx-deploy
+    spec:
+      containers:
+        - name: ngx-deploy
+          image: nginx
+          imagePullPolicy: IfNotPresent
+          volumeMounts:
+            - mountPath: /etc/nginx/conf.d
+              name: ngx-conf
+      restartPolicy: Always
+      volumes:
+        - name: ngx-conf
+          configMap:
+            name: ngx-conf
+

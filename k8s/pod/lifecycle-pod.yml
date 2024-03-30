@@ -1,0 +1,23 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nginx-lifecycle
+  labels:
+    app: nginx-lifecycle
+spec:
+  containers:
+    - name: nginx-lifecycle
+      image: nginx
+      imagePullPolicy: IfNotPresent
+      lifecycle:
+        postStart:
+          exec:
+            command:
+              - /bin/bash
+              - -c
+              - echo hello postStart
+        preStop:
+          exec:
+            command: ["/usr/sbin/nginx","-s","quit"]
+
+  restartPolicy: Always

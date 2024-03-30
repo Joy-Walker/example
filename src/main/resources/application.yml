@@ -1,0 +1,14 @@
+server:
+  port: 8888
+
+spring:
+  profiles:
+    active: dev
+
+
+test:
+  name: aaa
+
+demo:
+  name: 张三
+  age: 20

@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: statefulset-test
+  labels:
+    app: nginx
+spec:
+  serviceName: test-service-noclusterip
+  selector:
+    matchLabels:
+      app: nginx-statefulset
+  replicas: 2
+  template:
+    metadata:
+      name: nginx
+      labels:
+        app:
+    spec:
+      containers:
+        - name: nginx
+          image: nginx
+          imagePullPolicy: IfNotPresent
+      restartPolicy: Always
+

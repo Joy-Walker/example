@@ -1,0 +1,24 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ingress
+spec:
+  ingressClassName: ngx-ingress-class
+
+  rules:
+    - host: test-service
+      http:
+        paths:
+          - path: /
+            pathType: Exact
+            backend:
+              service:
+                name: test-service
+                port:
+                  number: 8080
+
+
+
+
+
+

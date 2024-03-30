@@ -1,0 +1,46 @@
+server:
+  port: 10001
+
+logging:
+  file:  web.log
+  path: ./logs/
+  level:
+    root: info
+  config: classpath:logback-spring.xml
+
+spring:
+  # 默认数据源配置
+  datasource:
+    primary:
+      url: jdbc:mysql://localhost:3306/db1?useSSL=false&serverTimezone=UTC
+      username: root
+      password: 123456
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      type: com.alibaba.druid.pool.DruidDataSource
+      initial-size: 10
+      max-active: 20
+      min-idle: 5
+      max-wait: 60000
+      time-between-eviction-runs-millis: 60000
+
+  # 第二个数据源配置
+    secondary:
+      url: jdbc:mysql://localhost:3306/db2?useSSL=false&serverTimezone=UTC
+      username: root
+      password: 123456
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      type: com.alibaba.druid.pool.DruidDataSource
+      initial-size: 5
+      max-active: 20
+      min-idle: 5
+      max-wait: 60000
+      time-between-eviction-runs-millis: 60000
+      # 其他Druid配置项...
+
+# Mybatis配置
+mybatis:
+  type-aliases-package: com.example.demo.entity
+  mapUnderscoreToCamelCase: false
+#  logImpl: org.apache.ibatis.logging.stdout.StdOutImpl # 打印SQL
+
+

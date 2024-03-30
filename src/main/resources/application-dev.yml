@@ -1,0 +1,16 @@
+server:
+  port: 10000
+  tomcat:
+    max-threads: 1
+
+demo:
+  name: 张三
+  age: 20
+
+test:
+  a:
+    name: bb
+
+
+
+

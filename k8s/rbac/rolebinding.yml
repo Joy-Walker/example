@@ -1,0 +1,13 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  namespace: mynamespace
+  name: example-rolebinding
+subjects: # 被作用者
+  - kind: User
+    name: example-user
+    apiGroup: rbac.authorization.k8s.io
+roleRef: # 引用的role对象
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: example-role

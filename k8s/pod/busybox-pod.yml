@@ -1,0 +1,26 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: busy-pod
+  labels:
+    owner: chrono
+    env: demo
+    region: north
+    tier: back
+spec:
+  shareProcessNamespace: true
+#  hostPID: true
+  containers:
+    - image: busybox:latest
+      name: busy
+      imagePullPolicy: IfNotPresent
+      stdin: true
+      tty: true
+      env:
+        - name: os
+          value: linux
+        - name: debug
+          value: "on"
+    - image: nginx
+      name: nginx
+      imagePullPolicy: IfNotPresent

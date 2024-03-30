@@ -1,0 +1,17 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: example-rollbinding
+  namespace: mynamespace
+
+
+#角色和用户进行绑定
+
+subjects: # 作用对象
+  - kind: ServiceAccount
+    name: example-sa
+
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: example-role
