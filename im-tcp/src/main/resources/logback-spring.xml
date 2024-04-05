@@ -94,22 +94,6 @@
         <queueSize>512</queueSize>
     </appender>
 
-    <!-- 应用日志 -->
-    <logger name="com.example.controller" additivity="false">
-        <appender-ref ref="CONSOLE"/>
-        <appender-ref ref="FILE-INFO"/>
-        <appender-ref ref="FILE-WARN"/>
-        <appender-ref ref="FILE-ERROR"/>
-    </logger>
-
-    <!-- 这样也可以在控制台输出sql-->
-    <logger name="com.example.db1.mapper"  additivity="false" level="DEBUG">
-        <appender-ref ref="CONSOLE"/>
-    </logger>
-
-    <logger name="com.example.db2.mapper"  additivity="false" level="DEBUG">
-        <appender-ref ref="CONSOLE"/>
-    </logger>
     
     <!-- 总日志出口 -->
     <root level="${logging.level.root}">
