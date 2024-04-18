@@ -5,6 +5,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
 
 /**
@@ -19,9 +20,15 @@ public class Init implements CommandLineRunner {
 
     @Autowired
     IMServer imServer;
+
+    @Autowired
+    RedisTemplate<String,String> redisTemplate;
+
     @Override
     public void run(String... args) throws Exception {
-        logger.info("imServer starting");
+
+        logger.info("redis test:{}",redisTemplate.opsForValue().get("key"));
+        logger.info("imServer starting port:{}",imServer.getPort());
         imServer.run();
     }
 }

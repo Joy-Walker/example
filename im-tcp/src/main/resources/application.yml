@@ -2,6 +2,21 @@ im:
   server:
     port: 9090
 
+
+
 logging:
   level:
     root: info
+spring:
+  redis:
+    host: 127.0.0.1
+    port: 6379
+    password:
+    database: 0
+    ssl: false
+    lettuce:
+      pool:
+        max-active: 10
+        max-idle: 8
+        min-idle: 2
+        max-wait: -1

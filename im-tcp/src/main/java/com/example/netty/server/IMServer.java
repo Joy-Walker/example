@@ -1,6 +1,7 @@
 package com.example.netty.server;
 
 import com.example.netty.server.codec.NettyCodec;
+import com.example.netty.server.handler.HearBeatHandler;
 import com.example.netty.server.handler.ServerHandler;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelFuture;
@@ -10,7 +11,7 @@ import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
-import org.springframework.stereotype.Component;
+import io.netty.handler.timeout.IdleStateHandler;
 
 /**
  * @description:
@@ -34,15 +35,15 @@ public class IMServer {
                         @Override
                         public void initChannel(SocketChannel ch) throws Exception {
                             ch.pipeline().addLast("decode",new NettyCodec())
-                                    .addLast("handler",new ServerHandler());
+                                    .addLast("handler",new ServerHandler())
+                                    .addLast(new IdleStateHandler(0,0,10))
+                                    .addLast("hb",new HearBeatHandler());
                         }
                     })
-                    .option(ChannelOption.SO_BACKLOG, 128)          // (5)
+                    .option(ChannelOption.SO_BACKLOG, 1024)          // (5)
                     .childOption(ChannelOption.SO_KEEPALIVE, true); // (6)
 
-            // Bind and start to accept incoming connections.
             ChannelFuture f = b.bind(port).sync(); // (7)
-
 
             // Wait until the server socket is closed.
             // In this example, this does not happen, but you can do that to gracefully

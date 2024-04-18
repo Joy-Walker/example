@@ -3,12 +3,12 @@ package com.example.netty.server.codec;
 import com.example.message.Message;
 import com.example.message.MessageHeader;
 import io.netty.buffer.ByteBuf;
-import io.netty.buffer.Unpooled;
-import io.netty.buffer.UnpooledHeapByteBuf;
+
+import io.netty.buffer.ByteBufUtil;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.LengthFieldBasedFrameDecoder;
 
-import java.nio.ByteBuffer;
+
 
 /**
  * @author :panligang
@@ -54,7 +54,8 @@ public class NettyCodec extends LengthFieldBasedFrameDecoder {
             if (null == frame) {
                 return null;
             }
-            int length = frame.readableBytes();
+            String receivedDataAsHexString = ByteBufUtil.hexDump(frame);
+            log.info("Received data as hex: {}", receivedDataAsHexString);
             MessageHeader messageHeader = decodeHeader(frame);
             Message message = decodeMessage(messageHeader, frame);
             return message;
