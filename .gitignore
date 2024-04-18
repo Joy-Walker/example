@@ -1,25 +1,16 @@
-/target/
-!.mvn/wrapper/maven-wrapper.jar
-
-### STS ###
-.apt_generated
+*dependency-reduced-pom.xml
 .classpath
-.factorypath
 .project
-.settings
-.springBeans
-.sts4-cache
-
-### IntelliJ IDEA ###
-.idea
-*.iws
+.settings/
+target/
+devenv
+*.log*
 *.iml
-*.ipr
-
-### NetBeans ###
-/nbproject/private/
-/nbbuild/
-/dist/
-/nbdist/
-/.nb-gradle/
-/build/
+.idea/
+*.versionsBackup
+!NOTICE-BIN
+!LICENSE-BIN
+.DS_Store
+localbin
+nohup.out
+~/IdeaProjects/im-tcp/target/
