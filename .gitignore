@@ -14,3 +14,6 @@ devenv
 localbin
 nohup.out
 */target/
+logs/
+*.class
+*.jar

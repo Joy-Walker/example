@@ -1,6 +1,5 @@
-package com.example.netty.server.task;
+package com.example.server.task;
 
-import com.example.init.Init;
 import com.example.message.Message;
 import com.example.pack.LoginPack;
 import com.example.session.SessionManager;

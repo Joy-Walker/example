@@ -1,10 +1,8 @@
-package com.example.netty.server.handler;
+package com.example.server.handler;
 
 import com.example.message.Message;
-import com.example.message.MessageHeader;
-import com.example.netty.server.task.LoginTask;
-import com.example.netty.server.task.Task;
-import com.example.netty.server.task.TaskFactory;
+import com.example.server.task.Task;
+import com.example.server.task.TaskFactory;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import org.slf4j.Logger;

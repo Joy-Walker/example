@@ -2,11 +2,14 @@ im:
   server:
     port: 9090
 
-
-
 logging:
+  file: imtcp.log
+  path: ./logs/
   level:
     root: info
+  config: classpath:logback-spring.xml
+
+
 spring:
   redis:
     host: 127.0.0.1

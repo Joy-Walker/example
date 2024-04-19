@@ -1,8 +1,8 @@
-package com.example.netty.server;
+package com.example.server;
 
-import com.example.netty.server.codec.NettyCodec;
-import com.example.netty.server.handler.HearBeatHandler;
-import com.example.netty.server.handler.ServerHandler;
+import com.example.server.codec.NettyCodec;
+import com.example.server.handler.HearBeatHandler;
+import com.example.server.handler.ServerHandler;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelInitializer;

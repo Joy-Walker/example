@@ -1,6 +1,6 @@
 package com.example.init;
 
-import com.example.netty.server.IMServer;
+import com.example.server.IMServer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

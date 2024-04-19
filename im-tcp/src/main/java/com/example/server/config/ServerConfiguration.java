@@ -1,6 +1,6 @@
-package com.example.netty.server.config;
+package com.example.server.config;
 
-import com.example.netty.server.IMServer;
+import com.example.server.IMServer;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

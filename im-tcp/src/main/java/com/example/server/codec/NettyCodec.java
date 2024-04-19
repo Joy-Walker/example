@@ -1,4 +1,4 @@
-package com.example.netty.server.codec;
+package com.example.server.codec;
 
 import com.example.message.Message;
 import com.example.message.MessageHeader;
@@ -54,12 +54,9 @@ public class NettyCodec extends LengthFieldBasedFrameDecoder {
             if (null == frame) {
                 return null;
             }
-            String receivedDataAsHexString = ByteBufUtil.hexDump(frame);
-            log.info("Received data as hex: {}", receivedDataAsHexString);
             MessageHeader messageHeader = decodeHeader(frame);
             Message message = decodeMessage(messageHeader, frame);
             return message;
-
         } catch (Exception e) {
             log.error("decode exception, " +  e);
             ctx.channel().close();

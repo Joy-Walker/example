@@ -1,4 +1,4 @@
-package com.example.netty.server.enums;
+package com.example.server.enums;
 
 /**
  * @author :panligang
