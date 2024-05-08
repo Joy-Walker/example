@@ -40,7 +40,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
         auth.userDetailsService(userDetailsService).passwordEncoder(NoOpPasswordEncoder.getInstance());
         auth.authenticationProvider(authenticationProvider);
 
-        // 不论是基于内存还是数据库最终都是一个UserDetailsService类
+        // 不论是基于内存还是数据库最终都是一个UserDetailsService的实现类
 
         /**
          * JdbcUserDetailsManager

@@ -1,6 +1,7 @@
 im:
   server:
     port: 9090
+    brokerId: 1
 
 logging:
   file: imtcp.log

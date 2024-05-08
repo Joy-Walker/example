@@ -2,10 +2,14 @@ package com.example.utils;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 
 public class JsonUtils {
+
+    static final Logger LOGGER = LoggerFactory.getLogger(JsonUtils.class);
 
     private static final ObjectMapper objectMapper = new ObjectMapper();
 
@@ -16,8 +20,13 @@ public class JsonUtils {
      * @return JSON字符串
      * @throws JsonProcessingException 如果转换过程中发生错误
      */
-    public static String toJson(Object obj) throws JsonProcessingException {
-        return objectMapper.writeValueAsString(obj);
+    public static String toJson(Object obj) {
+        try{
+            return objectMapper.writeValueAsString(obj);
+        }catch (Exception e) {
+            LOGGER.error("failed to invoke to json",e);
+            throw new RuntimeException(e);
+        }
     }
 
     /**
@@ -33,8 +42,12 @@ public class JsonUtils {
         try {
             return objectMapper.readValue(jsonStr, clazz);
         } catch (IOException e) {
-            e.printStackTrace();
+            LOGGER.error("failed to invoke fromJson exception",e);
         }
         return null;
+    }
+
+    public static void main(String[] args) {
+        System.out.println(JsonUtils.toJson("aaa"));
     }
 }

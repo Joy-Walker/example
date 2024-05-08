@@ -2,6 +2,7 @@ package com.example.service;
 
 import com.example.db1.mapper.TestDb1Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

@@ -14,6 +14,14 @@ import io.netty.channel.socket.nio.NioServerSocketChannel;
 import io.netty.handler.timeout.IdleStateHandler;
 
 /**
+ * sdk --- 接入层 --- 逻辑层 --- 存储层
+ *
+ * 接入层 发送mq消息
+ * 逻辑层 订阅mq消息 好友关系校验 回复ack到mq
+ * 接入层订阅mq消息，回复sdk ack
+ *
+ *
+ * 逻辑层 处理消息
  * @description:
  * @author: lld
  * @version: 1.0
@@ -22,6 +30,11 @@ import io.netty.handler.timeout.IdleStateHandler;
 public class IMServer {
 
     private int port;
+
+    /**
+     * 机器标识
+     */
+    private String brokerId;
 
     public void run() throws Exception {
         EventLoopGroup bossGroup = new NioEventLoopGroup(1); //线程池
@@ -61,5 +74,13 @@ public class IMServer {
 
     public void setPort(int port) {
         this.port = port;
+    }
+
+    public String getBrokerId() {
+        return brokerId;
+    }
+
+    public void setBrokerId(String brokerId) {
+        this.brokerId = brokerId;
     }
 }

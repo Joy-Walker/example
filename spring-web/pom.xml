@@ -54,6 +54,13 @@
             <version>8.0.29</version>
         </dependency>
 
+        <dependency>
+            <!--  不需要版本号  -->
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpclient</artifactId>
+        </dependency>
+
+
 
 
         <!--引入了logback 和 slf4j  不过此时单独引入这个包 其中的jul日志也会打印-->
