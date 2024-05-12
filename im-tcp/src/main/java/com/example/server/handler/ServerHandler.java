@@ -1,6 +1,7 @@
 package com.example.server.handler;
 
 import com.example.message.Message;
+import com.example.model.Result;
 import com.example.server.task.Task;
 import com.example.server.task.TaskFactory;
 import io.netty.channel.ChannelHandlerContext;
@@ -27,4 +28,9 @@ public class ServerHandler extends SimpleChannelInboundHandler<Message> {
         task.run(ctx,msg);
     }
 
+    @Override
+    public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
+        logger.error("exceptionCaught",cause);
+        ctx.writeAndFlush(Result.fail(cause.getMessage()));
+    }
 }

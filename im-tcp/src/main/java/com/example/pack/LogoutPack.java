@@ -5,15 +5,6 @@ package com.example.pack;
  * @description :
  * @create :2024-04-17 19:54:00
  */
-public class LogoutPack {
+public class LogoutPack extends Basepack {
 
-    private String userId;
-
-    public String getUserId() {
-        return userId;
-    }
-
-    public void setUserId(String userId) {
-        this.userId = userId;
-    }
 }

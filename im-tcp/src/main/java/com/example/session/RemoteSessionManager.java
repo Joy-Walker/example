@@ -11,13 +11,13 @@ import org.springframework.stereotype.Component;
  * @create :2024-04-19 23:08:00
  */
 @Component
-public class RemoteSessionManager implements SessionManager {
+public class RemoteSessionManager extends AbstractSessionManager {
 
     @Autowired
     RedisTemplate<String,Object> redisTemplate;
 
     @Override
-    public void addSession(String sessionId, LoginPack loginPack) {
+    public void doAddSession(String sessionId, LoginPack loginPack) {
         redisTemplate.opsForValue().set(sessionId,loginPack);
     }
 
@@ -27,7 +27,7 @@ public class RemoteSessionManager implements SessionManager {
     }
 
     @Override
-    public void removeSession(String sessionId) {
+    public void doRemoveSession(String sessionId) {
         redisTemplate.delete(sessionId);
     }
 }

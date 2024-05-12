@@ -15,7 +15,7 @@ public class TaskFactory {
             case 3:
                 return new PingTask();
             default:
-                return null;
+                throw new RuntimeException("messageTyp:" + messageType +    " is illegal");
         }
     }
 }

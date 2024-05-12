@@ -21,4 +21,6 @@ public interface Constants {
 
     AttributeKey<LoginPack> LOGIN_USER = AttributeKey.valueOf("loginUser");
 
+    AttributeKey<Long> LAST_TIME = AttributeKey.valueOf("lastTime");
+
 }

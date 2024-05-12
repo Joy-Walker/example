@@ -43,11 +43,18 @@ public class JsonUtils {
             return objectMapper.readValue(jsonStr, clazz);
         } catch (IOException e) {
             LOGGER.error("failed to invoke fromJson exception",e);
+            throw new RuntimeException(e);
         }
-        return null;
     }
 
-    public static void main(String[] args) {
-        System.out.println(JsonUtils.toJson("aaa"));
+
+
+    public static <T> T fromJsonByte(byte[] bytes, Class<T> clazz)  {
+        try {
+            return objectMapper.readValue(bytes, clazz);
+        } catch (IOException e) {
+            LOGGER.error("failed to invoke fromJson exception",e);
+            throw new RuntimeException(e);
+        }
     }
 }

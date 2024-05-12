@@ -5,15 +5,6 @@ package com.example.pack;
  * @description :
  * @create :2024-04-17 20:04:00
  */
-public class PingPack {
+public class PingPack extends Basepack{
 
-    private String userId;
-
-    public String getUserId() {
-        return userId;
-    }
-
-    public void setUserId(String userId) {
-        this.userId = userId;
-    }
 }

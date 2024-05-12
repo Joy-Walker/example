@@ -5,15 +5,15 @@ package com.example.pack;
  * @description :
  * @create :2024-04-17 19:19:00
  */
-public class LoginPack {
+public class LoginPack extends Basepack{
 
-    private String userId;
+    private String password;
 
-    public String getUserId() {
-        return userId;
+    public String getPassword() {
+        return password;
     }
 
-    public void setUserId(String userId) {
-        this.userId = userId;
+    public void setPassword(String password) {
+        this.password = password;
     }
 }

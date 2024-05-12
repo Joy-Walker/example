@@ -55,8 +55,7 @@ public class NettyCodec extends LengthFieldBasedFrameDecoder {
                 return null;
             }
             MessageHeader messageHeader = decodeHeader(frame);
-            Message message = decodeMessage(messageHeader, frame);
-            return message;
+            return decodeMessage(messageHeader, frame);
         } catch (Exception e) {
             log.error("decode exception, " +  e);
             ctx.channel().close();

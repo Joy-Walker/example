@@ -4,6 +4,8 @@ import com.example.message.Message;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.util.AttributeKey;
 
+import static com.example.constant.Constants.LAST_TIME;
+
 /**
  * @author :panligang
  * @description :
@@ -12,7 +14,7 @@ import io.netty.util.AttributeKey;
 public class PingTask implements Task{
     @Override
     public void run(ChannelHandlerContext ctx, Message message) {
-
-        ctx.channel().attr(AttributeKey.valueOf("lastTime")).set(System.currentTimeMillis());
+        ctx.channel().attr(LAST_TIME).set(System.currentTimeMillis());
+        ctx.writeAndFlush(new PingTask());
     }
 }
