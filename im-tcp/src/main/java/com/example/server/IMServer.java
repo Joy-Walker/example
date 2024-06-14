@@ -1,6 +1,7 @@
 package com.example.server;
 
-import com.example.server.codec.NettyCodec;
+import com.example.server.codec.NettyDecode;
+import com.example.server.codec.NettyEncode;
 import com.example.server.handler.HearBeatHandler;
 import com.example.server.handler.ServerHandler;
 import io.netty.bootstrap.ServerBootstrap;
@@ -47,7 +48,8 @@ public class IMServer {
                     .childHandler(new ChannelInitializer<SocketChannel>() { // (4)
                         @Override
                         public void initChannel(SocketChannel ch) throws Exception {
-                            ch.pipeline().addLast("decode",new NettyCodec())
+                            ch.pipeline().addLast("decode",new NettyDecode())
+                                    .addLast("encode",new NettyEncode())
                                     .addLast("handler",new ServerHandler())
                                     .addLast(new IdleStateHandler(0,0,10))
                                     .addLast("hb",new HearBeatHandler());

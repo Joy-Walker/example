@@ -19,6 +19,13 @@ public interface Constants {
     int LENGTH_ADJUSTMENT = 0;
     int INITIAL_BYTES_TO_STRIP = 0;
 
+     interface MessageType {
+        int LOGIN = 1;
+        int LOGOUT = 2;
+        int PING = 3;
+        int P2P = 4;
+    }
+
     AttributeKey<LoginPack> LOGIN_USER = AttributeKey.valueOf("loginUser");
 
     AttributeKey<Long> LAST_TIME = AttributeKey.valueOf("lastTime");

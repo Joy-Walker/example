@@ -1,6 +1,7 @@
 package com.example.server.task;
 
 import com.example.message.Message;
+import com.example.model.Result;
 import com.example.pack.LoginPack;
 import com.example.service.UserService;
 import com.example.session.connect.ConnectionHolder;
@@ -49,8 +50,11 @@ public class LoginTask implements Task{
         logger.info("loginPack:{}",loginPack);
         int exists = userService.getUserByUserIdAndPassword(loginPack.getUserId(), loginPack.getPassword());
         if(exists <= 0) {
-            throw new RuntimeException("用户名或者密码错误" + loginPack.getUserId());
+            logger.error("用户名或者密码错误" + loginPack.getUserId());
+            ctx.writeAndFlush(Result.fail(501, "用户名或者密码错误"));
+            return;
         }
         connectionHolder.addConnection(loginPack,ctx.channel());
+        ctx.writeAndFlush(Result.success("登录成功!"));
     }
 }

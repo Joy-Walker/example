@@ -4,7 +4,6 @@ import com.example.message.Message;
 import com.example.message.MessageHeader;
 import io.netty.buffer.ByteBuf;
 
-import io.netty.buffer.ByteBufUtil;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.LengthFieldBasedFrameDecoder;
 
@@ -15,9 +14,9 @@ import io.netty.handler.codec.LengthFieldBasedFrameDecoder;
  * @description :
  * @create :2024-04-03 20:35:00
  */
-public class NettyCodec extends LengthFieldBasedFrameDecoder {
+public class NettyDecode extends LengthFieldBasedFrameDecoder {
 
-    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(NettyCodec.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(NettyDecode.class);
 
     /**
      * Creates a new instance.
@@ -35,7 +34,7 @@ public class NettyCodec extends LengthFieldBasedFrameDecoder {
      * @param initialBytesToStrip：需要跳过的字节数
      *        the number of first bytes to strip out from the decoded frame
      */
-    public NettyCodec() {
+    public NettyDecode() {
         super(Integer.MAX_VALUE, 0, 4, 0, 4);
     }
 

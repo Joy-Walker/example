@@ -31,7 +31,6 @@ public class Init implements CommandLineRunner {
 
         redisTemplate.opsForValue().set("key",new LoginPack());
         LoginPack loginPack = (LoginPack) redisTemplate.opsForValue().get("key");
-
         logger.info("redis test:{}",redisTemplate.opsForValue().get("key"));
         logger.info("imServer starting port:{}",imServer.getPort());
         imServer.run();

@@ -34,7 +34,7 @@ public class ConnectionHolder {
     private SessionManager sessionManager;
 
 
-    ConnectionListener connectionListener = event -> {
+    private final ConnectionListener connectionListener = event -> {
         switch (event.getEvent()) {
             case CONNECT:
                 sessionManager.addSession(event.getBasepack().getUserId(), (LoginPack) event.getBasepack());

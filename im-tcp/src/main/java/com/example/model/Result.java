@@ -10,6 +10,7 @@ public class Result implements java.io.Serializable {
 
     private Object data;
 
+
     public int getCode() {
         return code;
     }
