@@ -16,4 +16,15 @@ public class LoginPack extends Basepack{
     public void setPassword(String password) {
         this.password = password;
     }
+
+    @Override
+    public String toString() {
+        return "LoginPack{" +
+                "password='" + password + '\'' +
+                ", userId='" + userId + '\'' +
+                ", formId=" + formId +
+                ", toId=" + toId +
+                ", messageType=" + messageType +
+                '}';
+    }
 }

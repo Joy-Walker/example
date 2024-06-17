@@ -48,9 +48,10 @@ public class LoginTask implements Task{
     public void run(ChannelHandlerContext ctx, Message message) {
         LoginPack loginPack = JsonUtils.fromJsonByte(message.getBody(), LoginPack.class);
         logger.info("loginPack:{}",loginPack);
+        loginPack.setMessageType(message.getHeader().getMessageType());
         int exists = userService.getUserByUserIdAndPassword(loginPack.getUserId(), loginPack.getPassword());
         if(exists <= 0) {
-            logger.error("用户名或者密码错误" + loginPack.getUserId());
+            logger.error("用户名或者密码错误, userId: {}" , loginPack.getUserId());
             ctx.writeAndFlush(Result.fail(501, "用户名或者密码错误"));
             return;
         }

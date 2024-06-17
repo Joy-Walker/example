@@ -8,7 +8,6 @@ import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
 import io.netty.handler.codec.LengthFieldBasedFrameDecoder;
-import io.netty.handler.codec.string.StringEncoder;
 
 
 public class NettyClient {
@@ -26,15 +25,15 @@ public class NettyClient {
                         @Override
                         protected void initChannel(SocketChannel ch) throws Exception {
                             // 添加StringEncoder处理器，用于将字符串转换为ByteBuf以便网络传输
-                            ch.pipeline().addLast(new LengthFieldBasedFrameDecoder(1024,0,4,0,4))
-                                    .addLast(new ClientHandler());
+                            ch.pipeline().addLast(new LengthFieldBasedFrameDecoder(1024, 0, 4, 0, 4))
+                                    .addLast(new ClientDecode()).addLast(new ClientHandler());
                         }
                     });
 
             System.out.println("Netty Client is ready...");
 
             // 连接到远程主机，这里以localhost和8080端口为例
-            ChannelFuture future = bootstrap.connect("127.0.0.1", 8080).sync();
+            ChannelFuture future = bootstrap.connect("127.0.0.1", 9090).sync();
             // 等待连接关闭的异步操作完成
             future.channel().closeFuture().sync();
         } finally {

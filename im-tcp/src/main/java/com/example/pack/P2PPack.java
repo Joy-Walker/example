@@ -9,6 +9,7 @@ public class P2PPack extends Basepack {
 
     private String content;
 
+
     public String getContent() {
         return content;
     }

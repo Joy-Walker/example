@@ -51,7 +51,7 @@ public class IMServer {
                             ch.pipeline().addLast("decode",new NettyDecode())
                                     .addLast("encode",new NettyEncode())
                                     .addLast("handler",new ServerHandler())
-                                    .addLast(new IdleStateHandler(0,0,10))
+                                    .addLast(new IdleStateHandler(0,0,120))
                                     .addLast("hb",new HearBeatHandler());
                         }
                     })
