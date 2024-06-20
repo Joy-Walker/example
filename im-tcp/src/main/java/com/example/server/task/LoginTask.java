@@ -5,7 +5,6 @@ import com.example.model.Result;
 import com.example.pack.LoginPack;
 import com.example.service.UserService;
 import com.example.session.connect.ConnectionHolder;
-import com.example.session.SessionManager;
 import com.example.utils.JsonUtils;
 import com.example.utils.SpringContext;
 import io.netty.channel.ChannelHandlerContext;
@@ -20,8 +19,6 @@ import static com.example.constant.Constants.LOGIN_USER;
  * @create :2024-04-10 19:29:00
  */
 public class LoginTask implements Task{
-
-
 
     private final UserService userService;
 

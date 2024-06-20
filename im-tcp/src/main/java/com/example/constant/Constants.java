@@ -1,7 +1,9 @@
 package com.example.constant;
 
 import com.example.pack.LoginPack;
+import com.example.utils.RemotingUtil;
 import io.netty.util.AttributeKey;
+import io.netty.util.NetUtil;
 
 /**
  * @author :panligang
@@ -29,5 +31,9 @@ public interface Constants {
     AttributeKey<LoginPack> LOGIN_USER = AttributeKey.valueOf("loginUser");
 
     AttributeKey<Long> LAST_TIME = AttributeKey.valueOf("lastTime");
+
+    String TOPIC_PREFIX = "MESSAGE:" + RemotingUtil.getLocalAddress() + ":";
+
+    String P2P_SEQUENCE_PREFIX = "p2p_sequence:";
 
 }

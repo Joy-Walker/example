@@ -4,16 +4,29 @@ import com.example.message.Message;
 import com.example.model.Result;
 import com.example.server.task.Task;
 import com.example.server.task.TaskFactory;
+import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import org.slf4j.Logger;
+import org.springframework.stereotype.Component;
 
 /**
  * @author :panligang
  * @description :
  * @create :2024-04-05 14:51:00
  */
+@Component
+@ChannelHandler.Sharable
 public class ServerHandler extends SimpleChannelInboundHandler<Message> {
+
+
+    public static final ServerHandler INSTANCE = new ServerHandler();
+
+    private ServerHandler(){}
+
+    public static ServerHandler getInstance(){
+        return INSTANCE;
+    }
 
     static final Logger logger = org.slf4j.LoggerFactory.getLogger(ServerHandler.class);
 

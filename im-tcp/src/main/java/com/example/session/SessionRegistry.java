@@ -11,12 +11,12 @@ import io.netty.channel.Channel;
  * @description :
  * @create :2024-04-17 19:31:00
  */
-public interface SessionManager {
+public interface SessionRegistry {
 
-     void addSession(String sessionId, LoginPack loginPack);
+     void register(String userId, String topic);
 
-    LoginPack getSession(String sessionId);
+    String getTopic(String sessionId);
 
-      void removeSession(String sessionId);
+      void remove(String sessionId);
 
 }

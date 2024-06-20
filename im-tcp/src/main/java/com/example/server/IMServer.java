@@ -50,7 +50,7 @@ public class IMServer {
                         public void initChannel(SocketChannel ch) throws Exception {
                             ch.pipeline().addLast("decode",new NettyDecode())
                                     .addLast("encode",new NettyEncode())
-                                    .addLast("handler",new ServerHandler())
+                                    .addLast("handler",ServerHandler.getInstance())
                                     .addLast(new IdleStateHandler(0,0,120))
                                     .addLast("hb",new HearBeatHandler());
                         }

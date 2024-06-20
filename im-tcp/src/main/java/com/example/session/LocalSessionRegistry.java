@@ -13,20 +13,20 @@ import java.util.concurrent.ConcurrentHashMap;
  * @create :2024-04-17 19:31:00
  */
 //@Component
-public class LocalSessionManager extends AbstractSessionManager{
+public class LocalSessionRegistry implements SessionRegistry{
 
-    private final static Map<String, LoginPack> SESSION_MAP = new ConcurrentHashMap<>(64);
+    private final static Map<String, String> SESSION_MAP = new ConcurrentHashMap<>(64);
     @Override
-    public void doAddSession(String sessionId, LoginPack loginPack) {
-        SESSION_MAP.put(sessionId, loginPack);
+    public void register(String sessionId, String topic) {
+        SESSION_MAP.put(sessionId, topic);
     }
     @Override
-    public LoginPack getSession(String sessionId) {
+    public String getTopic(String sessionId) {
         return SESSION_MAP.get(sessionId);
     }
 
     @Override
-    public void doRemoveSession(String sessionId) {
+    public void remove(String sessionId) {
         SESSION_MAP.remove(sessionId);
     }
 

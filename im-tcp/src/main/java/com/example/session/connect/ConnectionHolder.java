@@ -2,20 +2,22 @@ package com.example.session.connect;
 
 import com.example.pack.LoginPack;
 import com.example.pack.LogoutPack;
-import com.example.session.SessionManager;
+import com.example.session.SessionRegistry;
 import com.example.utils.RemotingUtil;
 import io.netty.channel.Channel;
+import io.netty.util.NetUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
 
-import static com.example.constant.Constants.LAST_TIME;
-import static com.example.constant.Constants.LOGIN_USER;
+import static com.example.constant.Constants.*;
 
 /**
  * @author :panligang
@@ -25,28 +27,36 @@ import static com.example.constant.Constants.LOGIN_USER;
 @Component
 public class ConnectionHolder {
 
+    public static final Logger LOGGER = LoggerFactory.getLogger(ConnectionHolder.class);
+
     private  final Map<String, io.netty.channel.Channel> connectionMap = new ConcurrentHashMap<>();
 
     private final List<ConnectionListener> connectionListeners = new CopyOnWriteArrayList<>();
 
+    @Value("${im.server.port:9090}")
+    private String port;
+
 
     @Autowired
-    private SessionManager sessionManager;
+    private SessionRegistry sessionRegistry;
 
 
     private final ConnectionListener connectionListener = event -> {
         switch (event.getEvent()) {
             case CONNECT:
-                sessionManager.addSession(event.getBasepack().getUserId(), (LoginPack) event.getBasepack());
+                // 维护用户和机器的关系
+                sessionRegistry.register(event.getBasepack().getUserId(), TOPIC_PREFIX + port);
                 // attr是channel的属性，每个client都有自己的channel因此是线程安全的.一个woker线程管理多个channel
                 event.getChannel().attr(LOGIN_USER).set((LoginPack)event.getBasepack());
                 event.getChannel().attr(LAST_TIME).set(System.currentTimeMillis());
+                LOGGER.info("新连接建立成功,userId:{},remote:{}", event.getBasepack().getUserId(), RemotingUtil.socketAddress2String(event.getChannel().remoteAddress()));
                 break;
             case DIS_CONNECT:
-                sessionManager.removeSession(event.getBasepack().getUserId());
+                sessionRegistry.remove(event.getBasepack().getUserId());
                 event.getChannel().attr(LOGIN_USER).set(null);
                 event.getChannel().attr(LAST_TIME).set(System.currentTimeMillis());
                 RemotingUtil.closeChannel(event.getChannel());
+                LOGGER.info("连接断开成功,userId:{},remote:{}", event.getBasepack().getUserId(), RemotingUtil.socketAddress2String(event.getChannel().remoteAddress()));
                 break;
             default:
                 break;
@@ -60,6 +70,7 @@ public class ConnectionHolder {
 
 
     public  void addConnection(LoginPack loginPack, Channel channel) {
+        // 维护用户id和channel的映射，将来消息推送使用
         connectionMap.put(loginPack.getUserId(), channel);
         connectionListeners.forEach(listener -> listener.onEvent(new ConnectEvent(channel,loginPack,ConnectEventEnum.CONNECT)));
     }

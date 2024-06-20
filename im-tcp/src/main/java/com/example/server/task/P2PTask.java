@@ -1,8 +1,11 @@
 package com.example.server.task;
 
 import com.example.message.Message;
+import com.example.model.Result;
 import com.example.pack.P2PPack;
+import com.example.service.MessageService;
 import com.example.utils.JsonUtils;
+import com.example.utils.SpringContext;
 import io.netty.channel.ChannelHandlerContext;
 
 /**
@@ -12,12 +15,19 @@ import io.netty.channel.ChannelHandlerContext;
  */
 public class P2PTask implements Task {
 
+    private final MessageService messageService;
+
+    public P2PTask() {
+        messageService = SpringContext.getBean(MessageService.class);
+    }
 
     @Override
     public void run(ChannelHandlerContext ctx, Message message) {
         P2PPack p2PPack = JsonUtils.fromJsonByte(message.getBody(), P2PPack.class);
         p2PPack.setMessageType(message.getHeader().getMessageType());
         //1、调用业务逻辑层
+        Result result = messageService.P2PMessage(p2PPack);
         //2、写回ack
+        ctx.writeAndFlush(result);
     }
 }

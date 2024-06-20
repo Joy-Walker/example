@@ -8,6 +8,6 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public int getUserByUserIdAndPassword(String userId, String password) {
-        return 0;
+        return 1;
     }
 }

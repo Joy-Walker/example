@@ -13,6 +13,9 @@ public class Basepack {
 
     protected int messageType;
 
+    // 消息唯一标识
+    protected String messageKey;
+
 
     public String getUserId() {
         return userId;
@@ -44,5 +47,13 @@ public class Basepack {
 
     public void setMessageType(int messageType) {
         this.messageType = messageType;
+    }
+
+    public String getMessageKey() {
+        return messageKey;
+    }
+
+    public void setMessageKey(String messageKey) {
+        this.messageKey = messageKey;
     }
 }

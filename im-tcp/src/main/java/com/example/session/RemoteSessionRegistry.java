@@ -3,6 +3,7 @@ package com.example.session;
 import com.example.pack.LoginPack;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Component;
 
 /**
@@ -11,23 +12,23 @@ import org.springframework.stereotype.Component;
  * @create :2024-04-19 23:08:00
  */
 @Component
-public class RemoteSessionManager extends AbstractSessionManager {
+public class RemoteSessionRegistry implements SessionRegistry {
 
     @Autowired
-    RedisTemplate<String,Object> redisTemplate;
+    StringRedisTemplate redisTemplate ;
 
     @Override
-    public void doAddSession(String sessionId, LoginPack loginPack) {
-        redisTemplate.opsForValue().set(sessionId,loginPack);
+    public void register(String sessionId, String topic) {
+        redisTemplate.opsForValue().set(sessionId,topic);
     }
 
     @Override
-    public LoginPack getSession(String sessionId) {
-        return (LoginPack) redisTemplate.opsForValue().get(sessionId);
+    public String getTopic(String sessionId) {
+        return  redisTemplate.opsForValue().get(sessionId);
     }
 
     @Override
-    public void doRemoveSession(String sessionId) {
+    public void remove(String sessionId) {
         redisTemplate.delete(sessionId);
     }
 }

@@ -10,5 +10,5 @@ import io.netty.channel.ChannelHandlerContext;
  */
 public interface Task {
 
-    public void run(ChannelHandlerContext ctx, Message message);
+     void run(ChannelHandlerContext ctx, Message message);
 }
