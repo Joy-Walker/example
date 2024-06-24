@@ -15,7 +15,7 @@ public class Application {
 
     public static void main(String[] args) {
         SpringApplication application = new SpringApplicationBuilder(Application.class)
-                .web(WebApplicationType.NONE)
+                .web(WebApplicationType.SERVLET)
                 .main(Application.class)
                 .build(args);
         application.run(args);

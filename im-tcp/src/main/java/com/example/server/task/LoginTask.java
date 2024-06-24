@@ -3,6 +3,7 @@ package com.example.server.task;
 import com.example.message.Message;
 import com.example.model.Result;
 import com.example.pack.LoginPack;
+import com.example.service.LoginService;
 import com.example.service.UserService;
 import com.example.session.connect.ConnectionHolder;
 import com.example.utils.JsonUtils;
@@ -11,7 +12,6 @@ import io.netty.channel.ChannelHandlerContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import static com.example.constant.Constants.LOGIN_USER;
 
 /**
  * @author :panligang
@@ -20,18 +20,15 @@ import static com.example.constant.Constants.LOGIN_USER;
  */
 public class LoginTask implements Task{
 
-    private final UserService userService;
+    static Logger logger = LoggerFactory.getLogger(LoginTask.class);
 
-
-    private final ConnectionHolder connectionHolder;
-
+    private final LoginService loginService;
 
     public LoginTask() {
-        userService = SpringContext.getBean(UserService.class);
-        connectionHolder = SpringContext.getBean(ConnectionHolder.class);
+        loginService = SpringContext.getBean(LoginService.class);
     }
 
-    static Logger logger = LoggerFactory.getLogger(LoginTask.class);
+
     /**
      * TODO redis session
      *                           ios     user
@@ -46,13 +43,7 @@ public class LoginTask implements Task{
         LoginPack loginPack = JsonUtils.fromJsonByte(message.getBody(), LoginPack.class);
         logger.info("loginPack:{}",loginPack);
         loginPack.setMessageType(message.getHeader().getMessageType());
-        int exists = userService.getUserByUserIdAndPassword(loginPack.getUserId(), loginPack.getPassword());
-        if(exists <= 0) {
-            logger.error("用户名或者密码错误, userId: {}" , loginPack.getUserId());
-            ctx.writeAndFlush(Result.fail(501, "用户名或者密码错误"));
-            return;
-        }
-        connectionHolder.addConnection(loginPack,ctx.channel());
-        ctx.writeAndFlush(Result.success("登录成功!"));
+        Result result = loginService.login(loginPack,ctx);
+        ctx.writeAndFlush(result);
     }
 }

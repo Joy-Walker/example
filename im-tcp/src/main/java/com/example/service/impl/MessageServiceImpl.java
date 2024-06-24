@@ -39,11 +39,11 @@ public class MessageServiceImpl implements MessageService {
         // 3、为消息生成seq用于排序
         long seq = sequenceService.getSequence(P2P_SEQUENCE_PREFIX + formId + ":" );
         LOGGER.info("3、为消息生成seq用于排序：{}",seq);
-        // 4、落库
+        // 4、落库[写扩散逻辑]
         LOGGER.info("4、消息落库：{}",messageKey);
         // 5、发送消息[给对端发]
         String topic = sessionRegistry.getTopic(String.valueOf(toId));
-        LOGGER.info("5、发送消息到：{}",topic);
+        LOGGER.info("5、发送消息到topic：{}",topic);
         return Result.success("ack:" + messageKey);
     }
 }
