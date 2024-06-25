@@ -43,6 +43,15 @@ public class Result implements java.io.Serializable {
         return result;
     }
 
+    public static Result success(String msg,Object data) {
+        Result result = new Result();
+        result.setCode(200);
+        result.setMsg(msg);
+        result.setData(data);
+        return result;
+    }
+
+
     public static Result fail(String msg) {
        return fail(500, msg);
     }

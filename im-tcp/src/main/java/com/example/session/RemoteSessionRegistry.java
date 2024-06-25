@@ -24,7 +24,7 @@ public class RemoteSessionRegistry implements SessionRegistry {
 
     @Override
     public String getTopic(String sessionId) {
-        return  redisTemplate.opsForValue().get(sessionId);
+        return redisTemplate.opsForValue().get(sessionId);
     }
 
     @Override

@@ -17,4 +17,16 @@ public class P2PPack extends Basepack {
     public void setContent(String content) {
         this.content = content;
     }
+
+    @Override
+    public String toString() {
+        return "P2PPack{" +
+                "userId='" + userId + '\'' +
+                ", formId=" + formId +
+                ", toId=" + toId +
+                ", messageType=" + messageType +
+                ", messageKey='" + messageKey + '\'' +
+                ", content='" + content + '\'' +
+                '}';
+    }
 }

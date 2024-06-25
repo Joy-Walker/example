@@ -24,3 +24,8 @@ spring:
         max-idle: 8
         min-idle: 2
         max-wait: -1
+rocketmq:
+  name-server: 127.0.0.1:9876
+  producer:
+    group: im-producer
+

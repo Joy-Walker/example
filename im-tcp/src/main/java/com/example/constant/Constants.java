@@ -32,7 +32,7 @@ public interface Constants {
 
     AttributeKey<Long> LAST_TIME = AttributeKey.valueOf("lastTime");
 
-    String TOPIC_PREFIX = "MESSAGE:" + RemotingUtil.getLocalAddress() + ":";
+    String TOPIC_PREFIX = "MESSAGE" + RemotingUtil.getLocalAddress().replaceAll("\\.","");
 
     String P2P_SEQUENCE_PREFIX = "p2p_sequence:";
 

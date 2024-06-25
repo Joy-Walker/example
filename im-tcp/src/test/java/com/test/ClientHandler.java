@@ -17,28 +17,28 @@ public class ClientHandler extends SimpleChannelInboundHandler<Result> {
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, Result msg) throws Exception {
         LOGGER.info("result:{}",msg);
-        ByteBuf buf = ctx.alloc().buffer();
-        P2PPack p2PPack = new P2PPack();
-        p2PPack.setFormId(1L);
-        p2PPack.setToId(1L);
-        p2PPack.setUserId("1");
-        p2PPack.setContent("你好!!!");
-        p2PPack.setMessageKey(UUID.randomUUID().toString());
-        byte[] body = JsonUtils.toJson(p2PPack).getBytes(StandardCharsets.UTF_8);
-        buf.writeInt(24 + body.length); // totalLength
-        buf.writeInt(0x12345678); // magicNumber
-        buf.writeInt(Constants.MessageType.P2P); // messageType
-        buf.writeInt(1); // version
-        buf.writeInt(1); // serializerType
-        buf.writeInt(body.length); // bodyLength
-        buf.writeInt(28 + body.length);
-        buf.writeBytes(body);
-        ctx.writeAndFlush(buf);
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
+//        ByteBuf buf = ctx.alloc().buffer();
+//        P2PPack p2PPack = new P2PPack();
+//        p2PPack.setFormId(1L);
+//        p2PPack.setToId(1L);
+//        p2PPack.setUserId("1");
+//        p2PPack.setContent("你好!!!");
+//        p2PPack.setMessageKey(UUID.randomUUID().toString());
+//        byte[] body = JsonUtils.toJson(p2PPack).getBytes(StandardCharsets.UTF_8);
+//        buf.writeInt(24 + body.length); // totalLength
+//        buf.writeInt(0x12345678); // magicNumber
+//        buf.writeInt(Constants.MessageType.P2P); // messageType
+//        buf.writeInt(1); // version
+//        buf.writeInt(1); // serializerType
+//        buf.writeInt(body.length); // bodyLength
+//        buf.writeInt(28 + body.length);
+//        buf.writeBytes(body);
+//        ctx.writeAndFlush(buf);
+//        try {
+//            Thread.sleep(1000);
+//        } catch (InterruptedException e) {
+//            throw new RuntimeException(e);
+//        }
 
     }
 }

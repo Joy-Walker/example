@@ -30,30 +30,20 @@ public class ClientDecode extends ByteToMessageDecoder {
     @Override
     public void channelActive(ChannelHandlerContext ctx) throws Exception {
         LOGGER.info("连接建立成功....");
-
-        new Thread(() -> {
-           while (true) {
-               ByteBuf buf = ctx.alloc().buffer();
-               LoginPack loginPack = new LoginPack();
-               loginPack.setPassword("***");
-               loginPack.setFormId(1L);
-               loginPack.setUserId("1");
-               byte[] body = JsonUtils.toJson(loginPack).getBytes(StandardCharsets.UTF_8);
-               buf.writeInt(24 + body.length); // totalLength
-               buf.writeInt(0x12345678); // magicNumber
-               buf.writeInt(1); // messageType
-               buf.writeInt(1); // version
-               buf.writeInt(1); // serializerType
-               buf.writeInt(body.length); // bodyLength
-               buf.writeInt(28 + body.length);
-               buf.writeBytes(body);
-               ctx.writeAndFlush(buf);
-               try {
-                   Thread.sleep(1000);
-               } catch (InterruptedException e) {
-                   throw new RuntimeException(e);
-               }
-           }
-        }).start();
+        ByteBuf buf = ctx.alloc().buffer();
+        LoginPack loginPack = new LoginPack();
+        loginPack.setPassword("***");
+        loginPack.setFormId(2L);
+        loginPack.setUserId("2");
+        byte[] body = JsonUtils.toJson(loginPack).getBytes(StandardCharsets.UTF_8);
+        buf.writeInt(24 + body.length); // totalLength
+        buf.writeInt(0x12345678); // magicNumber
+        buf.writeInt(1); // messageType
+        buf.writeInt(1); // version
+        buf.writeInt(1); // serializerType
+        buf.writeInt(body.length); // bodyLength
+        buf.writeInt(28 + body.length);
+        buf.writeBytes(body);
+        ctx.writeAndFlush(buf);
     }
 }
