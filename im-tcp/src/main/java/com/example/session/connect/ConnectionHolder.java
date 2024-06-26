@@ -33,8 +33,7 @@ public class ConnectionHolder {
 
     private final List<ConnectionListener> connectionListeners = new CopyOnWriteArrayList<>();
 
-    @Value("${im.server.port:9090}")
-    private String port;
+
 
 
     @Autowired
@@ -44,8 +43,8 @@ public class ConnectionHolder {
     private final ConnectionListener connectionListener = event -> {
         switch (event.getEvent()) {
             case CONNECT:
-                // 维护用户和机器的关系
-                sessionRegistry.register(event.getBasepack().getUserId(), TOPIC_PREFIX + port);
+                // 维护用户和网关机器的关系
+                sessionRegistry.register(event.getBasepack().getUserId(), TOPIC_PREFIX );
                 // attr是channel的属性，每个client都有自己的channel因此是线程安全的.一个woker线程管理多个channel
                 event.getChannel().attr(LOGIN_USER).set((LoginPack)event.getBasepack());
                 event.getChannel().attr(LAST_TIME).set(System.currentTimeMillis());

@@ -26,8 +26,7 @@ public class P2PTask implements Task {
         P2PPack p2PPack = JsonUtils.fromJsonByte(message.getBody(), P2PPack.class);
         p2PPack.setMessageType(message.getHeader().getMessageType());
         //1、调用业务逻辑层
-        Result result = messageService.
-                P2PMessage(p2PPack);
+        Result result = messageService.P2PMessage(p2PPack);
         //2、写回ack
         ctx.writeAndFlush(result);
     }
