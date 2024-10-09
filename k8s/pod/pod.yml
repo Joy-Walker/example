@@ -6,12 +6,23 @@ metadata:
     app: nginx
     owner: panligang
 spec:
+  shareProcessNamespace: true # 共享pod的pid namespace
+  nodeSelector:
+    disktype: ssd
   hostAliases:
     - ip: 127.0.0.1
       hostnames:
         - www.foo.com
+        - www.bar.com
+  volumes:
+    - name: nginx-vol
+      hostPath:
+        path: /tmp/data
   containers:
     - name: nginx
       image: nginx
       imagePullPolicy: IfNotPresent
+      volumeMounts:
+        - mountPath: /usr/share/nginx/html
+          name: nginx-vol
   restartPolicy: Always

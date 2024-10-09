@@ -21,4 +21,6 @@ spec:
         initialDelaySeconds: 5
         periodSeconds: 5
   restartPolicy: Always # default value
+#  默认是会重启的，但是一直在同一个node上，除非手动修改，如果这个node宕了也不会调度到另一个node，
+#  所以更推荐单个副本的deployment，而不是pod
 # 10.1.0.32
