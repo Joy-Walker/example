@@ -20,5 +20,7 @@ spec:
     - name: mysecret
       configMap:
         name: myconfigmap
+  dnsPolicy: ClusterFirst
+
 
 

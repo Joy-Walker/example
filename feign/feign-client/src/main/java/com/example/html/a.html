@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AJAX Test</title>
+</head>
+<body>
+<button id="testButton">Test AJAX Request</button>
+<div id="result"></div>
+
+<script>
+    document.getElementById('testButton').addEventListener('click', function() {
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET', 'http://localhost:10002/test12', true);
+
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState === 4) {
+                if (xhr.status === 200) {
+                    document.getElementById('result').innerText = 'Response: ' + xhr.responseText;
+                } else {
+                    document.getElementById('result').innerText = 'Error: ' + xhr.status + ' - ' + xhr.statusText;
+                }
+            }
+        };
+
+        xhr.onerror = function() {
+            document.getElementById('result').innerText = 'Network Error';
+        };
+
+        xhr.send();
+    });
+</script>
+</body>
+</html>

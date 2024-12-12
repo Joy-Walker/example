@@ -11,3 +11,17 @@ spec:
       protocol: TCP
 #  clusterIP: None
   type: ClusterIP #默认
+
+# pod的ip不是固定的，另外多个pod总有负载均衡的需求，通过iptables实现
+# 会造成宿主机有大量的iptables规则，耗费cpu性能，另外kube-proxy还需要监听
+# pod事件，动态更新endpoint，所以kube-proxy的启动参数--proxy-mode=iptables
+
+# IPVS的模式 当创建service之后，会在宿主机上创建一个虚拟网卡，kube-ipvs并且它的ip
+# 地址为service的vip地址，然后kube-proxy为这个ip地址设置虚拟主机，虚拟主机的地址就是代理的pod的地址
+
+#  service 与dns的关系
+#  Service和Pod都会被分配对应的DNS A记录
+#  对于普通的service，访问分配的域名会得到service的vip地址
+#  对于headless service，访问分配的域名会得到pod的ip地址
+
+#

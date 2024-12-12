@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: redis-deployment
+  labels:
+    app: redis-deployment
+spec:
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1 # 滚动更新中一次可以创建的pod数量
+      maxUnavailable: 1 # 滚动更新中一次可以删除的pod数量
+  selector:
+    matchLabels:
+      app: redis-deploy
+  replicas: 2
+  template:
+    metadata:
+      name: redis-deployment
+      labels:
+        app: redis-deploy
+    spec:
+      hostAliases:
+        - ip: 127.0.0.1
+          hostnames:
+            - foo.remote
+      containers:
+        - name: redis-deploy
+          image: redis:5.0
+          ports:
+            - containerPort: 80
+          imagePullPolicy: IfNotPresent
+      restartPolicy: Always
+
+
+

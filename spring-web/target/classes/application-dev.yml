@@ -12,7 +12,7 @@ spring:
   # 默认数据源配置
   datasource:
     primary:
-      url: jdbc:mysql://localhost:3306/db1?useSSL=false&serverTimezone=UTC
+      url: jdbc:mysql://localhost:3306/?useSSL=false&serverTimezone=UTC
       username: root
       password: 123456
       driver-class-name: com.mysql.cj.jdbc.Driver
@@ -25,7 +25,7 @@ spring:
 
   # 第二个数据源配置
     secondary:
-      url: jdbc:mysql://localhost:3306/db2?useSSL=false&serverTimezone=UTC
+      url: jdbc:mysql://localhost:3306/?useSSL=false&serverTimezone=UTC
       username: root
       password: 123456
       driver-class-name: com.mysql.cj.jdbc.Driver
@@ -43,4 +43,7 @@ mybatis:
   mapUnderscoreToCamelCase: false
 #  logImpl: org.apache.ibatis.logging.stdout.StdOutImpl # 打印SQL
 
-
+eureka:
+  client:
+    fetch-registry: true
+    register-with-eureka: true

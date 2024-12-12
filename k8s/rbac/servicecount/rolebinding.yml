@@ -3,8 +3,6 @@ kind: RoleBinding
 metadata:
   name: example-rollbinding
   namespace: mynamespace
-
-
 #角色和用户进行绑定
 
 subjects: # 作用对象

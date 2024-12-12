@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: redis
-          image: redis
+          image: redis:5.0
           ports:
             - containerPort: 6379
           imagePullPolicy: IfNotPresent
@@ -24,5 +24,7 @@ spec:
         - key: node-role.kubernetes.io/master
           effect: NoSchedule
           operator: Exists
+
+# DaemonSet: 每个node上运行这样一个pod，有新的node加入集群，pod也会自动部署到新的node上，当旧节点删除后，上面的pod也会被回收掉。
 
 
