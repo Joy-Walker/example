@@ -9,3 +9,6 @@ spec:
       protocol: TCP
   clusterIP: None
   type: ClusterIP #默认
+
+# 代理的pod <pod-name>.<svc-name>.<namespace>.svc.cluster.local 唯一的可解析的地址
+# 保证了网络标示的稳定性

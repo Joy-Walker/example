@@ -1,0 +1,36 @@
+apiVersion: v1
+data:
+  application.yml: |
+    im:
+      server:
+        port: 9090
+        brokerId: 1
+
+    logging:
+      file: imtcp.log
+      path: ./logs/
+      level:
+        root: info
+      config: classpath:logback-spring.xml
+
+    spring:
+      redis:
+        host: 127.0.0.1
+        port: 6379
+        password:
+        database: 0
+        ssl: false
+        lettuce:
+          pool:
+            max-active: 10
+            max-idle: 8
+            min-idle: 2
+            max-wait: -1
+
+    rocketmq:
+      name-server: 127.0.0.1:9876
+      producer:
+        group: im-producer
+kind: ConfigMap
+metadata:
+  name: myconfigmap
