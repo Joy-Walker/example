@@ -15,6 +15,7 @@ spec:
       labels:
         app: nginx-deploy
     spec:
+      restartPolicy: Always
       hostAliases:
         - ip: 127.0.0.1
           hostnames:
@@ -28,7 +29,6 @@ spec:
           volumeMounts:
             - mountPath: /usr/share/nginx/html
               name: nginx-vol
-      restartPolicy: Always
       volumes:
         - name: nginx-vol
           hostPath:

@@ -1,3 +1,5 @@
+
+# 由运维定义的持久化卷，事先在k8s集群中创建好
 apiVersion: v1
 kind: PersistentVolume
 metadata:
