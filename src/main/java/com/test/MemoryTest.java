@@ -5,7 +5,10 @@ import jdk.nashorn.internal.runtime.options.Option;
 import java.nio.file.OpenOption;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.atomic.AtomicReference;
 
 /**
  * @author :panligang
@@ -14,9 +17,26 @@ import java.util.Optional;
  */
 public class MemoryTest {
 
-    public static List<Object> obj = new ArrayList<>();
+    public static volatile Map<String,String> map = new ConcurrentHashMap<>();
 
     public static void main(String[] args) {
-        obj.add(new byte[1024]);
+       new Thread(()->{
+           map.forEach((k,v)->{
+               // todo 业务逻辑
+           });
+       }).start();
+
+
+//        new Thread(()->{
+//            map.put("key","value");
+//            //更新map
+//        }).start();
+
+        new Thread(()->{
+            Map<String,String> temp = new ConcurrentHashMap<>();
+            temp.put("key","value");
+            map = temp;
+            temp = null;
+        }).start();
     }
 }
