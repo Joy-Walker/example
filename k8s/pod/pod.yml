@@ -7,8 +7,8 @@ metadata:
     owner: panligang
 spec:
   shareProcessNamespace: true # 共享pod的pid namespace
-  nodeSelector:
-    disktype: ssd
+#  nodeSelector:
+#    disktype: ssd
   hostAliases:
     - ip: 127.0.0.1
       hostnames:

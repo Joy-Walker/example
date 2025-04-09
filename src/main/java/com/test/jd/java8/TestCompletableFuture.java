@@ -40,22 +40,15 @@ public class TestCompletableFuture {
 //        });
 //        System.out.println(future.get());
 
-        CompletableFuture<String> completableFuture = CompletableFuture.supplyAsync(() -> 1 / 0).thenApply(ret -> ret.toString());
-        System.out.println(completableFuture.get());
+//        CompletableFuture<String> completableFuture = CompletableFuture.supplyAsync(() -> 1 / 0).thenApply(ret -> ret.toString());
+//        System.out.println(completableFuture.get());
 
-//        CompletableFuture.supplyAsync(()-> 1 / 0).exceptionally()
+        CompletableFuture<Integer> future = CompletableFuture.supplyAsync(() -> 1 / 0).whenComplete((ret, ex) -> {
+            System.out.println(ret);
+            ex.printStackTrace();
+        });
+        System.out.println(future.get());
 
-
-//        System.out.println(test().get());
-//        test().thenAccept(s-> System.out.println(s));
-//
-//        while (true) {
-//            System.out.println(11111);
-//            sleep(1000);
-//            if(false) {
-//                break;
-//            }
-//        }
     }
 
 

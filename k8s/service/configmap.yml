@@ -3,7 +3,7 @@ kind: ConfigMap
 metadata:
   name: ngx-conf
 data:
-  default.conf: |
+  default.conf: |+
     server {
       listen 80;
       location / {

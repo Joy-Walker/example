@@ -1,12 +1,17 @@
 package com.example.controller;
 
+import com.example.pojo.User;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.stream.Collectors;
 
 /**
  * @author :panligang
@@ -49,6 +54,22 @@ public class CookieController {
         String queryString = request.getQueryString();
         return "111";
     }
+
+    @GetMapping("/test4")
+    public String test4(HttpServletRequest request) {
+        HttpSession session = request.getSession(true);
+        session.setAttribute("user",new User("panligang"));
+        return "ok";
+    }
+
+    @GetMapping("/test5")
+    public String test5(HttpServletRequest request) {
+        HttpSession session = request.getSession(true);
+        Object user = session.getAttribute("user");
+        return "ok";
+    }
+
+
 
 
 }

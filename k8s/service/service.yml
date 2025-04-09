@@ -4,13 +4,15 @@ metadata:
   name: test-service
 spec:
   selector:
-    app: ngx-deploy
+    app: ngx-deploy # 这里其实匹配的是pod的标签而不是deploy的标签
   ports:
     - port: 8080
       targetPort: 80
+#      nodePort: 30000
       protocol: TCP
 #  clusterIP: None
-  type: ClusterIP #默认
+  type: ClusterIP
+#  externalTrafficPolicy: Local
 
 # pod的ip不是固定的，另外多个pod总有负载均衡的需求，通过iptables实现
 # 会造成宿主机有大量的iptables规则，耗费cpu性能，另外kube-proxy还需要监听
@@ -24,4 +26,7 @@ spec:
 #  对于普通的service，访问分配的域名会得到service的vip地址
 #  对于headless service，访问分配的域名会得到pod的ip地址
 
-#
+#  externalTrafficPolicy: Local
+# 设置为local，请求转发到node上后，如果node上没有相应的pod，则流量会被丢弃
+# 设置为cluster（默认），请求转发到node节点后，如果节点上没有相应的pod，则请求会转发到其他节点
+# 这样的话，源ip可能就不是客户端的ip了 而是转发的node的ip

@@ -1,0 +1,36 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: test-configmap3
+  labels:
+    app:  test-configmap3
+spec:
+  containers:
+    - name:  nginx-configmap
+      image: nginx
+      imagePullPolicy: IfNotPresent
+      volumeMounts:
+        # 容器的制定目录下会生成个文件名为application.yml的文件
+        - mountPath: /test/bbb
+          name: myconfigmap
+    - name: redis
+      image: redis:5.0
+      imagePullPolicy: IfNotPresent
+      # 挂载到容器中
+      volumeMounts:
+         # 容器的制定目录下会生成个文件名为application.yml的文件
+        - mountPath: /test/aaa
+          name: myconfigmap
+  restartPolicy: Always
+  # 外面定义的volume,pod级别
+  volumes:
+    - name: myconfigmap
+      configMap:
+        name: myconfigmap
+        items:
+          - key: application.yml
+            path: application.yml
+  dnsPolicy: ClusterFirst
+
+
+

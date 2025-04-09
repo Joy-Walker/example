@@ -45,7 +45,7 @@ public class ConnectionHolder {
             case CONNECT:
                 // 维护用户和网关机器的关系
                 sessionRegistry.register(event.getBasepack().getUserId(), TOPIC_PREFIX );
-                // attr是channel的属性，每个client都有自己的channel因此是线程安全的.一个woker线程管理多个channel
+                // attr是channel的属性，每个client都有自己的channel因此是线程安全的.一个worker线程管理多个channel
                 event.getChannel().attr(LOGIN_USER).set((LoginPack)event.getBasepack());
                 event.getChannel().attr(LAST_TIME).set(System.currentTimeMillis());
                 LOGGER.info("新连接建立成功,userId:{},remote:{}", event.getBasepack().getUserId(), RemotingUtil.socketAddress2String(event.getChannel().remoteAddress()));
