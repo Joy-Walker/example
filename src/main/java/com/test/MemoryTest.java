@@ -20,6 +20,9 @@ public class MemoryTest {
     public static volatile Map<String,String> map = new ConcurrentHashMap<>();
 
     public static void main(String[] args) {
+
+        Runtime.getRuntime().availableProcessors();
+
        new Thread(()->{
            map.forEach((k,v)->{
                // todo 业务逻辑

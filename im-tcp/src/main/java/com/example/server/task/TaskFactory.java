@@ -18,6 +18,8 @@ public class TaskFactory {
                 return new PingTask();
             case Constants.MessageType.P2P:
                 return new P2PTask();
+            case Constants.MessageType.MESSAGE_ACK:
+                return new MessageAckTask();
             default:
                 throw new RuntimeException("messageTyp:" + messageType + " is illegal");
         }

@@ -1,0 +1,17 @@
+[
+  {
+    "name": "task1",
+    "param": {
+      "param1": "value1",
+      "param2": "value2"
+    }
+  },
+  {
+    "name": "task1",
+    "param": {
+      "param1": "value3",
+      "param2": "value4"
+    }
+  }
+]
+怎么把内部的param这个map结构转成这样的param1=value1,value3&param2=value2,value4

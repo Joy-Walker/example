@@ -1,12 +1,10 @@
 package com.example.mq;
 
 import com.example.constant.Constants;
-import com.example.model.Result;
-import com.example.pack.LoginPack;
 import com.example.pack.P2PPack;
+import com.example.helper.MessageRouter;
 import com.example.session.connect.ConnectionHolder;
 import com.example.utils.JsonUtils;
-import io.netty.channel.Channel;
 import org.apache.rocketmq.client.consumer.DefaultMQPushConsumer;
 import org.apache.rocketmq.client.consumer.listener.ConsumeConcurrentlyContext;
 import org.apache.rocketmq.client.consumer.listener.ConsumeConcurrentlyStatus;
@@ -14,7 +12,6 @@ import org.apache.rocketmq.client.consumer.listener.MessageListenerConcurrently;
 import org.apache.rocketmq.client.exception.MQClientException;
 import org.apache.rocketmq.common.consumer.ConsumeFromWhere;
 import org.apache.rocketmq.common.message.MessageExt;
-import org.apache.rocketmq.remoting.common.RemotingHelper;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -40,6 +37,8 @@ public class MQPushConsumer implements MessageListenerConcurrently {
     @Autowired
     private ConnectionHolder connectionHolder;
 
+    @Autowired
+    MessageRouter messageRouter;
 
     /**
      * 初始化
@@ -52,7 +51,10 @@ public class MQPushConsumer implements MessageListenerConcurrently {
             //从消费队列头开始消费
             consumer.setConsumeFromWhere(ConsumeFromWhere.CONSUME_FROM_FIRST_OFFSET);
             //consumer.setMessageModel(MessageModel.CLUSTERING);
-            //订阅主题
+            //订阅主题，仅仅需要订阅当前实例相关的，其它的不关心
+            /**
+             * 有几个服务，会创建几个topic，发送消息的时候会判断接收人连接的是哪个服务，然后投送到对应的topic
+             */
             consumer.subscribe(Constants.TOPIC_PREFIX + port, "*");
             consumer.registerMessageListener(this);
             consumer.start();
@@ -70,9 +72,9 @@ public class MQPushConsumer implements MessageListenerConcurrently {
                 MessageExt msg = list.get(index);
                 P2PPack p2PPack = JsonUtils.fromJsonByte(msg.getBody(), P2PPack.class);
                 log.info("MQ:消费者接受新消息：{}{}{}{}{}", msg.getMsgId(), msg.getTopic(), msg.getTags(), msg.getKeys(), p2PPack);
-                Channel channel = connectionHolder.getConnection(String.valueOf(p2PPack.getToId()));
-                if(channel != null) {
-                    channel.writeAndFlush(Result.success("p2pMessage",p2PPack));
+                boolean success = messageRouter.route(p2PPack);
+                if (!success) {
+                    log.info("更新消息状态为NO_ROUTE");
                 }
             }
         } catch (Exception e) {

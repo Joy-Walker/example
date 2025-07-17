@@ -8,4 +8,6 @@ import com.example.server.task.P2PTask;
 public interface MessageService {
 
    Result P2PMessage(P2PPack pack);
+
+   Result pullOfflineMessage(String userId);
 }

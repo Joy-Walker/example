@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AJAX请求示例</title>
+    <style>
+        button {
+            margin: 10px;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+<h1>AJAX请求示例</h1>
+<button onclick="requestTest4()">请求/test4</button>
+<button onclick="requestTest3()">请求/test3</button>
+<button onclick="requestTest5()">请求/test5</button>
+<button onclick="requestTest1()">请求/test1</button>
+<button onclick="requestTest12()">请求/test12</button>
+
+<script>
+    // 请求/test4接口
+    function requestTest4() {
+        fetch('http://localhost:10002/test4', {
+            method: 'GET',
+            credentials: 'include' // 确保发送和接收cookies
+        })
+            .then(response => response.text())
+            .then(data => {
+                alert('test4响应: ' + data); // 弹出响应内容
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+    }
+
+    // 请求/test3接口
+    function requestTest3() {
+        fetch('http://localhost:10002/test3', {
+            method: 'GET',
+        })
+            .then(response => response.text())
+            .then(data => {
+                alert('test3响应: ' + data); // 弹出响应内容
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+    }
+
+
+    // 请求/test5接口
+    function requestTest5() {
+        fetch('http://localhost:10002/test5', {
+            method: 'GET',
+            credentials: 'include' // 确保发送和接收cookies
+        })
+            .then(response => response.text())
+            .then(data => {
+                alert('test5响应: ' + data); // 弹出响应内容
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+    }
+    // 请求/test1接口
+    function requestTest1() {
+        fetch('http://localhost:10002/test1', {
+            method: 'GET',
+            credentials: 'include' // 确保发送和接收cookies
+        })
+            .then(response => response.text())
+            .then(data => {
+                alert('test1响应: ' + data); // 弹出响应内容
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+    }
+
+    function requestTest12() {
+        var xhr = new XMLHttpRequest();
+        xhr.open("GET", "http://localhost:10002/test12", true);
+
+        xhr.onload = function () {
+            if (xhr.status >= 200 && xhr.status < 300) {
+                // 请求成功，处理响应数据
+                console.log("Response:", xhr.responseText);
+            } else {
+                // 请求失败，处理错误
+                console.error("Request failed with status:", xhr.status);
+            }
+        };
+        xhr.onerror = function () {
+            console.error("Request failed");
+        };
+        xhr.send();
+    }
+
+</script>
+</body>
+</html>

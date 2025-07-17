@@ -19,7 +19,7 @@ public class MainApplication {
     static Logger logger = LoggerFactory.getLogger(MainApplication.class);
 
     public static void main(String[] args) {
-
+        logger.info("11111");
         SpringApplication.run(MainApplication.class);
 
     }

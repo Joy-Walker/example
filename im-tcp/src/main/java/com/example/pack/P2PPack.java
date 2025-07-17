@@ -9,6 +9,8 @@ public class P2PPack extends Basepack {
 
     private String content;
 
+    private long sequenceId;
+
 
     public String getContent() {
         return content;
@@ -18,15 +20,19 @@ public class P2PPack extends Basepack {
         this.content = content;
     }
 
+    public long getSequenceId() {
+        return sequenceId;
+    }
+
+    public void setSequenceId(long sequenceId) {
+        this.sequenceId = sequenceId;
+    }
+
     @Override
     public String toString() {
         return "P2PPack{" +
-                "userId='" + userId + '\'' +
-                ", formId=" + formId +
-                ", toId=" + toId +
-                ", messageType=" + messageType +
-                ", messageKey='" + messageKey + '\'' +
-                ", content='" + content + '\'' +
+                "content='" + content + '\'' +
+                ", sequenceId=" + sequenceId +
                 '}';
     }
 }

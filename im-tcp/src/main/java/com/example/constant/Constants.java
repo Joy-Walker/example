@@ -26,7 +26,8 @@ public interface Constants {
         int LOGOUT = 2;
         int PING = 3;
         int P2P = 4;
-    }
+        int MESSAGE_ACK = 5;
+     }
 
     AttributeKey<LoginPack> LOGIN_USER = AttributeKey.valueOf("loginUser");
 

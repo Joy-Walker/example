@@ -22,7 +22,7 @@ public class RemoteSessionRegistry implements SessionRegistry {
     private String port;
 
 
-    // 每个tcp实例对应一个topic，订阅消息的时候只需要订阅这个topic即可
+    // 每个tcp服务实例对应一个topic，订阅消息的时候只需要订阅这个topic即可
     @Override
     public void register(String sessionId, String topic) {
         redisTemplate.opsForValue().set(sessionId,topic + port);

@@ -97,7 +97,7 @@
     
     <!-- 总日志出口 -->
     <root level="${logging.level.root}">
-        <appender-ref ref="CONSOLE"/>
+<!--        <appender-ref ref="CONSOLE"/>-->
         <appender-ref ref="info-asyn"/>
         <appender-ref ref="warn-asyn"/>
         <appender-ref ref="error-asyn"/>

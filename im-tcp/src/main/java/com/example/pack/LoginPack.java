@@ -9,12 +9,22 @@ public class LoginPack extends Basepack{
 
     private String password;
 
+    private Long lastMessageId;
+
     public String getPassword() {
         return password;
     }
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public Long getLastMessageId() {
+        return lastMessageId;
+    }
+
+    public void setLastMessageId(Long lastMessageId) {
+        this.lastMessageId = lastMessageId;
     }
 
     @Override

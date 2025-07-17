@@ -4,6 +4,7 @@ import com.example.message.Message;
 import com.example.model.Result;
 import com.example.pack.LoginPack;
 import com.example.service.LoginService;
+import com.example.service.MessageService;
 import com.example.service.UserService;
 import com.example.session.connect.ConnectionHolder;
 import com.example.utils.JsonUtils;
@@ -24,16 +25,16 @@ public class LoginTask implements Task{
 
     private final LoginService loginService;
 
+    private final MessageService messageService;
+
     public LoginTask() {
         loginService = SpringContext.getBean(LoginService.class);
+        messageService = SpringContext.getBean(MessageService.class);
     }
 
 
     /**
-     * TODO redis session
-     *                           ios     user
-     * appId:session:sessionId   android user
-     *                           pc      user
+     *
      * @param ctx
      * @param message
      */
@@ -44,6 +45,9 @@ public class LoginTask implements Task{
         logger.info("loginPack:{}",loginPack);
         loginPack.setMessageType(message.getHeader().getMessageType());
         Result result = loginService.login(loginPack,ctx);
+        if(result.getCode() == 200) {
+            result = messageService.pullOfflineMessage(loginPack.getUserId());
+        }
         ctx.writeAndFlush(result);
     }
 }

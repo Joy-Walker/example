@@ -1,0 +1,17 @@
+<input type="file" id="fileInput" />
+<button onclick="upload()">上传</button>
+
+<script>
+    function upload() {
+        const file = document.getElementById('fileInput').files[0];
+        const formData = new FormData();
+        formData.append("file", file);
+
+        fetch("http://localhost:8080/upload", {
+            method: "POST",
+            body: formData
+        })
+            .then(res => res.text())
+            .then(url => alert("上传成功！访问地址：" + url));
+    }
+</script>
