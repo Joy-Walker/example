@@ -35,6 +35,13 @@ public class SensitiveJsonSerializer extends JsonSerializer<String> implements C
         }
     }
 
+    /**
+     * 防止死递归
+     * @param prov
+     * @param property
+     * @return
+     * @throws JsonMappingException
+     */
     @Override
     public JsonSerializer<?> createContextual(SerializerProvider prov, BeanProperty property)
             throws JsonMappingException

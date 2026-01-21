@@ -163,7 +163,8 @@ public class LogAspect
         // 是否需要保存response，参数和值
         if (log.isSaveResponseData() && StringUtils.isNotNull(jsonResult))
         {
-            operLog.setJsonResult(StringUtils.substring(JSON.toJSONString(jsonResult), 0, 2000));
+            String jsonOutput = JSON.toJSONString(jsonResult, excludePropertyPreFilter(new String[]{}));
+            operLog.setJsonResult(StringUtils.substring(jsonOutput, 0, 2000));
         }
     }
 
@@ -179,13 +180,63 @@ public class LogAspect
         Map<?, ?> paramsMap = ServletUtils.getParamMap(ServletUtils.getRequest());
         if (StringUtils.isEmpty(paramsMap) && StringUtils.equalsAny(requestMethod, HttpMethod.PUT.name(), HttpMethod.POST.name(), HttpMethod.DELETE.name()))
         {
-            String params = argsArrayToString(joinPoint.getArgs(), excludeParamNames);
-            operLog.setOperParam(params);
+            // 获取请求体内容
+            String requestBody = getRequestBody(joinPoint.getArgs());
+            if (StringUtils.isNotEmpty(requestBody))
+            {
+                operLog.setOperParam(StringUtils.substring(requestBody, 0, PARAM_MAX_LENGTH));
+            }
+            else
+            {
+                String params = argsArrayToString(joinPoint.getArgs(), excludeParamNames);
+                operLog.setOperParam(params);
+            }
         }
         else
         {
             operLog.setOperParam(StringUtils.substring(JSON.toJSONString(paramsMap, excludePropertyPreFilter(excludeParamNames)), 0, PARAM_MAX_LENGTH));
         }
+    }
+    
+    /**
+     * 获取请求体内容
+     * 
+     * @param args 方法参数
+     * @return 请求体内容
+     */
+    private String getRequestBody(Object[] args)
+    {
+        if (args == null || args.length == 0)
+        {
+            return null;
+        }
+        
+        StringBuilder requestBody = new StringBuilder();
+        for (Object arg : args)
+        {
+            if (arg != null && !isFilterObject(arg))
+            {
+                // 排除常见的非业务对象
+                if (!(arg instanceof HttpServletRequest) && !(arg instanceof HttpServletResponse) 
+                    && !(arg instanceof MultipartFile) && !(arg instanceof BindingResult))
+                {
+                    try
+                    {
+                        String jsonObj = JSON.toJSONString(arg, excludePropertyPreFilter(new String[]{}));
+                        if (StringUtils.isNotEmpty(jsonObj))
+                        {
+                            requestBody.append(jsonObj).append(" ");
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        log.error("获取请求体内容异常: {}", e.getMessage(), e);
+                    }
+                }
+            }
+        }
+        
+        return StringUtils.isNotEmpty(requestBody.toString()) ? requestBody.toString().trim() : null;
     }
 
     /**
