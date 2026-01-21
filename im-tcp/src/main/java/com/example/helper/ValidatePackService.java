@@ -1,6 +1,7 @@
 package com.example.helper;
 
 import com.example.pack.Basepack;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * @author :panligang
@@ -15,6 +16,9 @@ public class ValidatePackService {
         Long toId = pack.getToId();
         if (formId == null || toId == null) {
            return false;
+        }
+        if(StringUtils.isEmpty(pack.getMessageKey())) {
+            return false;
         }
         return true;
     }

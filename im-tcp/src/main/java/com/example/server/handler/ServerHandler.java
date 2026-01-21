@@ -11,7 +11,7 @@ import org.slf4j.Logger;
 import org.springframework.stereotype.Component;
 
 /**
- * @author :panligang
+ * @author :代码如棋，落子无悔。风林火山，到此一游
  * @description :
  * @create :2024-04-05 14:51:00
  */

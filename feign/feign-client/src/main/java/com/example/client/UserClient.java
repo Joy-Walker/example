@@ -8,6 +8,6 @@ import org.springframework.cloud.openfeign.FeignClient;
  * @description :
  * @create :2024-03-22 22:22:00
  */
-@FeignClient(name = "userClient",url = "http://127.0.0.1:10000/aaa")
+@FeignClient(name = "userClient", url = "http://127.0.0.1:10000/aaa", configuration = com.example.config.FeignConfig.class)
 public interface UserClient extends UserApi {
 }

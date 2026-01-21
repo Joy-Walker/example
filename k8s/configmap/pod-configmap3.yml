@@ -28,7 +28,9 @@ spec:
       configMap:
         name: myconfigmap
         items:
+          # 只挂载configmap中的某个key
           - key: application.yml
+          # 重命名文件 （最终在容器中生成的文件名称）
             path: application.yml
   dnsPolicy: ClusterFirst
 

@@ -53,13 +53,18 @@ public class Result implements java.io.Serializable {
 
 
     public static Result fail(String msg) {
-       return fail(500, msg);
+       return fail(500, msg,null);
     }
 
-    public static Result fail(int code, String msg) {
+    public static Result fail(String msg,Object data) {
+        return fail(500, msg,data);
+    }
+
+    public static Result fail(int code, String msg, Object data) {
         Result result = new Result();
         result.setCode(code);
         result.setMsg(msg);
+        result.setData(data);
         return result;
     }
 

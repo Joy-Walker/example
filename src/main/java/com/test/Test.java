@@ -72,4 +72,27 @@ public class Test {
         System.out.println("分页结果:");
         paginatedData.forEach(System.out::println);
     }
+
+    /**
+     * 输入: nums = [1,2,3,4,5,6,7], k = 3
+     * 输出: [5,6,7,1,2,3,4]
+     * 解释: 0-->3 1->4 2->5 3->6 4->7 5->1 6->2 7->3
+     * 向右轮转 1 步: [7,1,2,3,4,5,6]
+     * 向右轮转 2 步: [6,7,1,2,3,4,5]
+     * 向右轮转 3 步: [5,6,7,1,2,3,4]
+     * @param nums
+     * @param k
+     */
+    public void rotate(int[] nums, int k) {
+        int[] temp = new int[nums.length];
+        int index = 0;
+        for(int i = 0; i < nums.length; i++) {
+            index = i + k ;
+            index = index % nums.length;
+            temp[index] = nums[i];
+        }
+        for(int i = 0; i < nums.length; i++) {
+            nums[i] = temp[i];
+        }
+    }
 }

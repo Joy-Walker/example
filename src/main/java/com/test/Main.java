@@ -1,93 +1,109 @@
 package com.test;
 
-import com.test.config.DemoConfig;
-import com.test.config.TestConfig;
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.boot.context.properties.EnableConfigurationProperties;
-import org.springframework.context.ConfigurableApplicationContext;
 
-import java.util.HashSet;
-import java.util.Optional;
-import java.util.Set;
+
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import java.io.IOException;
+import java.math.BigDecimal;
+import java.util.*;
 
 /**
  * @author :panligang
  * @description :
  * @create :2023-12-14 16:21:00
  */
-@SpringBootApplication
-@EnableConfigurationProperties
+
 public class Main {
 
-    public static void main(String[] args) throws InterruptedException {
-        SpringApplication.run(Main.class,args);
+    public static void main(String[] args) throws InterruptedException, IOException {
+        // Step 1️⃣: 定义两个差 1 的 long 值
+        long originalA = 66072478512345670L;
+        long originalB = 66072478512345671L;
+
+        // Step 2️⃣: 把它们转成科学计数法字符串（模拟 ES 序列化）
+        String sciA = String.format("%.16E", (double) originalA);
+        String sciB = String.format("%.16E", (double) originalB);
+
+        System.out.println("科学计数法格式:");
+        System.out.println("a = " + sciA);
+        System.out.println("b = " + sciB);
+
+        // Step 3️⃣: 构造 JSON
+        String json = String.format("{\"a\": %s, \"b\": %s}", sciA, sciB);
+        System.out.println("\n构造的 JSON:");
+        System.out.println(json);
+
+        // Step 4️⃣: 用 Jackson 解析
+        ObjectMapper mapper = new ObjectMapper();
+        JsonNode root = mapper.readTree(json);
+
+        // Step 5️⃣: 两种方式取值
+        long a1 = root.get("a").asLong();
+        long b1 = root.get("b").asLong();
+
+        long a2 = new BigDecimal(root.get("a").asText()).longValue();
+        long b2 = new BigDecimal(root.get("b").asText()).longValue();
+
+        // Step 6️⃣: 对比输出
+        System.out.println("\n原始 long:");
+        System.out.println("a = " + originalA);
+        System.out.println("b = " + originalB);
+        System.out.println("a == b ? " + (originalA == originalB));
+
+        System.out.println("\n直接 asLong() 结果:");
+        System.out.println("a = " + a1);
+        System.out.println("b = " + b1);
+        System.out.println("a == b ? " + (a1 == b1));
+
+        System.out.println("\nasText + BigDecimal 结果:");
+        System.out.println("a = " + a2);
+        System.out.println("b = " + b2);
+        System.out.println("a == b ? " + (a2 == b2));
     }
 
-    int getMinCoinCountOfValue(int total, int[] values, int valueIndex) {
-        int valueCount = values.length;
-        if (valueIndex == valueCount) { return Integer.MAX_VALUE; }
 
-        int minResult = Integer.MAX_VALUE;
-        int currentValue = values[valueIndex];
-        int maxCount = total / currentValue;
-
-        for (int count = maxCount; count >= 0; count --) {
-            int rest = total - count * currentValue;
-
-            // 如果rest为0，表示余额已除尽，组合完成
-            if (rest == 0) {
-                minResult = Math.min(minResult, count);
-                break;
-            }
-
-            // 否则尝试用剩余面值求当前余额的硬币总数
-            int restCount = getMinCoinCountOfValue(rest, values, valueIndex + 1);
-
-            // 如果后续没有可用组合
-            if (restCount == Integer.MAX_VALUE) {
-                // 如果当前面值已经为0，返回-1表示尝试失败
-                if (count == 0) { break; }
-                // 否则尝试把当前面值-1
+    public static List<List<Integer>> threeSum(int[] nums) {
+        Arrays.sort(nums);
+        List<List<Integer>> ret = new ArrayList<>();
+        for (int i = 0; i < nums.length; i++) {
+            if (i > 0 && nums[i] == nums[i - 1]) {
                 continue;
             }
 
-            minResult = Math.min(minResult, count + restCount);
+            // -4 -1 -1 0 1 2
+            int left = i + 1;
+            int right = nums.length - 1;
+            int diff = 0 - nums[i];
+            while (left < right) {
+                if (nums[left] + nums[right] == diff) {
+                    ret.add(Arrays.asList(nums[i], nums[left], nums[right]));
+                    while (left < right) {
+                        if (nums[left] == nums[left + 1]) {
+                            left++;
+                        } else {
+                            break;
+                        }
+                    }
+                    while (left < right) {
+                        if (nums[right] == nums[right - 1]) {
+                            right--;
+                        } else {
+                            break;
+                        }
+                    }
+                    left++;
+                    right--;
+                } else if (nums[left] + nums[right] > diff) {
+                    right--;
+                } else {
+                    left++;
+
+                }
+            }
         }
-
-        return minResult;
-    }
-
-    int getMinCoinCountLoop(int total, int[] values, int k) {
-        int minCount = Integer.MAX_VALUE;
-        int valueCount = values.length;
-
-        if (k == valueCount) {
-            return Math.min(minCount, getMinCoinCountOfValue(total, values, 0));
-        }
-
-        for (int i = k; i <= valueCount - 1; i++) {
-            // k位置已经排列好
-            int t = values[k];
-            values[k] = values[i];
-            values[i]=t;
-            minCount = Math.min(minCount, getMinCoinCountLoop(total, values, k + 1)); // 考虑后一位
-
-            // 回溯
-            t = values[k];
-            values[k] = values[i];
-            values[i]=t;
-        }
-
-        return minCount;
-    }
-
-    int getMinCoinCountOfValue() {
-        int[] values = { 5, 3 }; // 硬币面值
-        int total = 11; // 总价
-        int minCoin = getMinCoinCountLoop(total, values, 0);
-
-        return (minCoin == Integer.MAX_VALUE) ? -1 : minCoin;  // 输出答案
+        return ret;
     }
 }
+

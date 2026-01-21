@@ -5,3 +5,38 @@ spring:
       location: /Users/apple/test
       max-file-size: 10MB
       max-request-size: 11MB
+
+# Feign 配置
+feign:
+  client:
+    config:
+      default:
+        # 连接超时时间(毫秒)
+        connectTimeout: 5000
+        # 读取超时时间(毫秒)
+        readTimeout: 10000
+        # 日志级别
+        loggerLevel: basic
+  # 启用压缩
+  compression:
+    request:
+      enabled: true
+      mime-types: text/xml,application/xml,application/json
+      min-request-size: 2048
+    response:
+      enabled: true
+  # 使用 HttpClient 替代默认的 URLConnection(更稳定)
+  httpclient:
+    enabled: true
+    # 最大连接数
+    max-connections: 200
+    # 每个路由的最大连接数
+    max-connections-per-route: 50
+    # 连接存活时间
+    time-to-live: 900
+    time-to-live-unit: seconds
+
+# 日志配置(用于查看Feign请求详情)
+logging:
+  level:
+    com.example.client: DEBUG

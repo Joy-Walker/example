@@ -33,7 +33,7 @@ public class LoginServiceImpl implements LoginService {
         int exists = userService.getUserByUserIdAndPassword(loginPack.getUserId(), loginPack.getPassword());
         if(exists <= 0) {
             logger.error("用户名或者密码错误, userId: {}" , loginPack.getUserId());
-            return Result.fail(501, "用户名或者密码错误");
+            return Result.fail("用户名或者密码错误", loginPack.getMessageKey());
         }
         connectionHolder.addConnection(loginPack,ctx.channel());
         return Result.success("登录成功");

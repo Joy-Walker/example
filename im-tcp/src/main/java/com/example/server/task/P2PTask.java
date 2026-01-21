@@ -27,7 +27,7 @@ public class P2PTask implements Task {
         p2PPack.setMessageType(message.getHeader().getMessageType());
         //1、调用业务逻辑层
         Result result = messageService.P2PMessage(p2PPack);
-        //2、写回ack
+        //2、向客户端写会ack
         ctx.writeAndFlush(result);
     }
 }

@@ -29,6 +29,10 @@ spec:
           volumeMounts:
             - mountPath: /usr/share/nginx/html
               name: nginx-vol
+          resources:
+            requests:
+              cpu: "0.5"
+              memory: "512Mi"
       volumes:
         - name: nginx-vol
           hostPath:

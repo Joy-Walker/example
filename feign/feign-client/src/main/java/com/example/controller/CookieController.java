@@ -6,12 +6,15 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.BufferedReader;
 import java.io.IOException;
-import java.util.Arrays;
+import java.io.OutputStream;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -40,10 +43,6 @@ public class CookieController {
      * @return
      * @throws IOException
      */
-
-
-
-
 
 
     @GetMapping("/test12")
@@ -95,6 +94,52 @@ public class CookieController {
 
         return version;
     }
+
+
+    @GetMapping("/test8")
+    public String test8(HttpServletRequest request) throws Exception {
+       String s = request.getReader().lines().collect(Collectors.joining());
+        s = request.getReader().lines().collect(Collectors.joining());
+        request.getInputStream().read();
+        return "ok";
+    }
+    @GetMapping("/test-stream")
+    public void testStream(HttpServletResponse response) throws IOException {
+        // 设置返回类型
+        response.setContentType("text/plain;charset=UTF-8");
+
+        // 1. 拿到输出流
+        ServletOutputStream out = response.getOutputStream();
+
+        // 2. 写出一段数据
+        out.print("Hello Client!\n");
+
+        // 3. flush（立即把内容写给客户端，但不会结束方法执行）
+        out.flush();
+
+        System.out.println("=== 已经写出数据，但方法还在继续执行 ===");
+
+        // 4. 再写一段数据
+        out.print("More data after flush\n");
+        out.flush();
+
+        // 5. 这里即使关闭流，后面的代码也还会执行
+        out.close();
+
+        System.out.println("=== 即使关闭流，后续代码也执行 ===");
+
+        // 6. 如果这里再写，就会抛异常（Stream closed）
+         out.print("This will fail\n");
+         out.flush();
+
+        System.out.println("=== 2即使关闭流，后续代码也执行 ===");
+    }
+
+
+
+
+
+
 
 
 
