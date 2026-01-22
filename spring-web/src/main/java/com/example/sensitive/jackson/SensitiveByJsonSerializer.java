@@ -8,9 +8,11 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.ser.ContextualSerializer;
+import org.springframework.core.annotation.AnnotatedElementUtils;
 
 import java.io.IOException;
 import java.lang.annotation.Annotation;
+import java.lang.reflect.AnnotatedElement;
 
 /**
  * @author :panligang
@@ -33,6 +35,7 @@ public class SensitiveByJsonSerializer extends JsonSerializer<String> implements
 
     @Override
     public JsonSerializer<?> createContextual(SerializerProvider serializerProvider, BeanProperty beanProperty) throws JsonMappingException {
+        // 针对直接object.write("aaa") 这样的情况处理
         if(beanProperty == null) {
             return serializerProvider.findValueSerializer(beanProperty.getType(), beanProperty);
         }

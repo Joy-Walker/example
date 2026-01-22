@@ -1,8 +1,6 @@
 package com.example.vo;
 
 import com.example.sensitive.Sensitive;
-import com.example.sensitive.jackson.SensitiveByJsonSerializer;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 import java.util.List;
 

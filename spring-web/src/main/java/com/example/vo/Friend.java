@@ -16,7 +16,6 @@ public class Friend {
     private String name;
 
     @Sensitive(type = Sensitive.SensitiveType.PHONE)
-    @JsonSerialize(using = SensitiveByJsonSerializer.class)
     private String phone;
 
     private List<String> passwords;
