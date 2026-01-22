@@ -93,7 +93,10 @@
             <artifactId>spring-boot-configuration-processor</artifactId>
             <optional>true</optional>
         </dependency>
-
+        <dependency>
+            <groupId>org.aspectj</groupId>
+            <artifactId>aspectjweaver</artifactId>
+        </dependency>
 
 
         <!--最终上面三个依赖的引入的结果和Springboot的logging-starter的结果是一样的-->

@@ -26,6 +26,8 @@ public class CustomDateSerializer extends StdSerializer<Date> {
     public void serialize(
             Date value, JsonGenerator gen, SerializerProvider arg2)
       throws IOException, JsonProcessingException {
+        gen.writeStartObject();
         gen.writeString(formatter.format(value));
+        gen.writeEndObject();
     }
 }
