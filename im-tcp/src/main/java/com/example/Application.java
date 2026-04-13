@@ -14,6 +14,8 @@ import org.springframework.boot.builder.SpringApplicationBuilder;
 public class Application {
 
     public static void main(String[] args) {
+        System.setProperty("rocketmq.client.logUseSlf4j", "true");
+        
         SpringApplication application = new SpringApplicationBuilder(Application.class)
                 .web(WebApplicationType.SERVLET)
                 .main(Application.class)

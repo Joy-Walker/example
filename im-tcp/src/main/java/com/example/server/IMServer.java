@@ -3,6 +3,7 @@ package com.example.server;
 import com.example.server.codec.NettyDecode;
 import com.example.server.codec.NettyEncode;
 import com.example.server.handler.HearBeatHandler;
+import com.example.server.handler.LoggingHandler;
 import com.example.server.handler.ServerHandler;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelFuture;
@@ -48,7 +49,9 @@ public class IMServer {
                     .childHandler(new ChannelInitializer<SocketChannel>() { // (4)
                         @Override
                         public void initChannel(SocketChannel ch) throws Exception {
-                            ch.pipeline().addLast("decode",new NettyDecode())
+                            ch.pipeline()
+                                    .addLast("logging",new LoggingHandler())
+                                    .addLast("decode",new NettyDecode())
                                     .addLast("encode",new NettyEncode())
                                     .addLast("handler",ServerHandler.getInstance())
                                     .addLast(new IdleStateHandler(0,0,120))
@@ -84,5 +87,11 @@ public class IMServer {
 
     public void setBrokerId(String brokerId) {
         this.brokerId = brokerId;
+    }
+
+    public static void main(String[] args) throws Exception {
+        IMServer imServer = new IMServer();
+        imServer.setPort(9090);
+        imServer.run();
     }
 }

@@ -38,8 +38,15 @@ public class NettyDecode extends LengthFieldBasedFrameDecoder {
         super(Integer.MAX_VALUE, 0, 4, 0, 4);
     }
 
+
+    
+
     /**
-     *
+     * 
+     * 
+     *   +----------------------------------------------------------+
+     *   | totalLength(4字节) | magic(4) | type(4) | ... | body(N) |
+     *   +----------------------------------------------------------+
      * @param ctx
      * @param in
      * @return
@@ -49,6 +56,7 @@ public class NettyDecode extends LengthFieldBasedFrameDecoder {
     public Object decode(ChannelHandlerContext ctx, ByteBuf in) throws Exception {
         ByteBuf frame = null;
         try {
+            // 读取到一个完整的报文
             frame = (ByteBuf) super.decode(ctx, in);
             if (null == frame) {
                 return null;
